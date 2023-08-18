@@ -17,7 +17,9 @@ public class DaoPostgresUsuario implements DaoUsuario {
 	private Connection conexao;
 	
 	public DaoPostgresUsuario() {
+		
 		this.conexao = ManagerDb.getInstance().getConexao();
+		
 	}
 	
 	@Override
@@ -48,20 +50,28 @@ public class DaoPostgresUsuario implements DaoUsuario {
 	@Override
 	public void alterar(Usuario usuario) {
 		
-PreparedStatement ps = null;
+		PreparedStatement ps = null;
 		
 		try {
+			
 			ManagerDb.getInstance().configurarAutocommitDa(conexao, false);
+			
 			ps = conexao.prepareStatement(UPDATE);
 			ps.setString(1, usuario.getNomeCompleto());
 			ps.setString(2, usuario.getSenha());
 			ps.setString(3, usuario.getLogin());
+			
 			boolean isAlteracaoOK = ps.executeUpdate() == 1;
+			
 			if (isAlteracaoOK) {
+				
 				this.conexao.commit();
+				
 			} else {
 				this.conexao.rollback();
+				
 			}
+			
 			ManagerDb.getInstance().configurarAutocommitDa(conexao, true);
 			
 		} catch (Exception e) {
@@ -87,9 +97,13 @@ PreparedStatement ps = null;
 			ps = conexao.prepareStatement(SELECT_BY_LOGIN);
 			ps.setString(1, login);
 			rs = ps.executeQuery();
+			
 			if (rs.next()) {
+				
 				return extrairDo(rs);
+				
 			}
+			
 			return null;
 			
 		} catch (Exception e) {

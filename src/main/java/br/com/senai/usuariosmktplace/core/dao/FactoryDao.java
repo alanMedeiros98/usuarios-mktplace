@@ -6,11 +6,7 @@ public class FactoryDao {
 
 	private static FactoryDao instance;
 	
-	private FactoryDao() {
-		
-		
-		
-	}
+	private FactoryDao() {}
 	
 	public DaoUsuario getDaoUsuario() {
 		
