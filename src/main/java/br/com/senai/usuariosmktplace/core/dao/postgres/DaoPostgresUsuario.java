@@ -24,117 +24,73 @@ public class DaoPostgresUsuario implements DaoUsuario {
 	
 	@Override
 	public void inserir(Usuario usuario) {
-		
 		PreparedStatement ps = null;
-		
 		try {
-			
 			ps = conexao.prepareStatement(INSERT);
 			ps.setString(1, usuario.getLogin());
 			ps.setString(2, usuario.getNomeCompleto());
 			ps.setString(3, usuario.getSenha());
 			ps.execute();
-			
 		} catch (Exception e) {
-			
 			throw new RuntimeException("Ocorreu um erro ao inserir o usuário. Motivo: " + e.getMessage());
-			
 		} finally {
-			
 			ManagerDb.getInstance().fechar(ps);
-			
 		}
 		
 	}
 
 	@Override
 	public void alterar(Usuario usuario) {
-		
 		PreparedStatement ps = null;
-		
 		try {
-			
 			ManagerDb.getInstance().configurarAutocommitDa(conexao, false);
-			
 			ps = conexao.prepareStatement(UPDATE);
 			ps.setString(1, usuario.getNomeCompleto());
 			ps.setString(2, usuario.getSenha());
 			ps.setString(3, usuario.getLogin());
-			
 			boolean isAlteracaoOK = ps.executeUpdate() == 1;
-			
 			if (isAlteracaoOK) {
-				
 				this.conexao.commit();
-				
 			} else {
 				this.conexao.rollback();
-				
 			}
-			
 			ManagerDb.getInstance().configurarAutocommitDa(conexao, true);
-			
 		} catch (Exception e) {
-			
 			throw new RuntimeException("Ocorreu um erro ao alterar o usuário. Motivo: " + e.getMessage());
-			
 		} finally {
-			
 			ManagerDb.getInstance().fechar(ps);
-			
 		}
-		
 	}
 
 	@Override
 	public Usuario buscarPor(String login) {
-		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		
 		try {
-			
 			ps = conexao.prepareStatement(SELECT_BY_LOGIN);
 			ps.setString(1, login);
 			rs = ps.executeQuery();
-			
 			if (rs.next()) {
-				
 				return extrairDo(rs);
-				
 			}
-			
 			return null;
-			
 		} catch (Exception e) {
-			
 			throw new RuntimeException("Ocorreu um erro ao buscar o usuário. Motivo: " + e.getMessage());
-			
 		} finally {
-			
 			ManagerDb.getInstance().fechar(ps);
 			ManagerDb.getInstance().fechar(rs);
-			
 		}
-		
 	}
 
 	private Usuario extrairDo(ResultSet rs) {
-		
 		try {
-			
 			String login = rs.getString("login");
 			String senha = rs.getString("senha");
 			String nome = rs.getString("nome");
-			
 			return new Usuario(login, senha, nome);
-			
 		} catch (Exception e) {
-			
 			throw new RuntimeException("Ocorreu um erro ao extrari o usuário. Motivo: " + e.getMessage());
-			
 		}
-		
 	}
 	
 }
