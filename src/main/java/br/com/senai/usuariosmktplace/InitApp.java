@@ -9,12 +9,9 @@ public class InitApp {
 	public static void main(String[] args) {
 		
 		DaoUsuario dao = FactoryDao.getInstance().getDaoUsuario();
-		Usuario usuario = dao.buscarPor("asd");
-		if (usuario == null) {
-			System.out.println("Não existe usuário");
-		} else {
-			System.out.println(usuario.getNomeCompleto());
-		}
+		
+		Usuario usuario = new Usuario("alan teste", "Alan Duarte de Medeiros", "alan12345566");
+		System.out.println(usuario.getLogin());
 		
 	}
 	
