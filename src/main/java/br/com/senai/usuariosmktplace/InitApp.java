@@ -8,7 +8,6 @@ public class InitApp {
 		
 		UsuarioService service = new UsuarioService();
 		service.criarPor("Alan Duarte de Medeiros", "alan1234");
-		
 	};
 	
 }
