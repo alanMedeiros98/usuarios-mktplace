@@ -17,9 +17,7 @@ public class DaoPostgresUsuario implements DaoUsuario {
 	private Connection conexao;
 	
 	public DaoPostgresUsuario() {
-		
 		this.conexao = ManagerDb.getInstance().getConexao();
-		
 	}
 	
 	@Override
