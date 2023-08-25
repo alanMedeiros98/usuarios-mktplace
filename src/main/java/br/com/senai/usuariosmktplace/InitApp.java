@@ -10,8 +10,8 @@ public class InitApp {
 		
 		DaoUsuario dao = FactoryDao.getInstance().getDaoUsuario();
 		
-		Usuario usuario = new Usuario("alan teste", "Alan Duarte de Medeiros", "alan12345566");
-		System.out.println(usuario.getLogin());
+		Usuario usuario = new Usuario("alan teste", "alan12345566", "Alan Duarte de Medeiros");
+		System.out.println(usuario);
 		
 	}
 	
